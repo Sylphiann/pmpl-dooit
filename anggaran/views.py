@@ -27,7 +27,7 @@ def buat_anggaran(request):
     context = {}
   
     form = AnggaranForm(request.POST or None)
-    form.fields['kategori'].queryset = Kategori.objects.filter(user=request.user)
+    form.fields['kategori'].queryset = Kategori.objects.filter(user=request.user, jenis_kategori=2)
 
     if form.is_valid() and request.method == 'POST':
         anggaran_form = form.save(commit=False)

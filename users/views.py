@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 
 from .forms import UserForm
 from .models import CustomUser, CustomUserProfile
+from kategori.models import *
+from catatanTransaksi.models import *
 
 # Create your views here.
 
@@ -38,7 +40,9 @@ def register(request):
       user = CustomUser.objects.create_user(company_name=company_name, username=username, email=email, password=password)
       user.role = CustomUser.PENCATAT
       user.save()
+      populate_category(user)
       messages.success(request, 'Akun Anda telah berhasil didaftarkan!')
+
       return redirect('login')
     else:
       messages.error(request, 'Form tidak valid. Silakan coba lagi!')
@@ -78,3 +82,14 @@ def logout(request):
   auth.logout(request)
   messages.info(request, 'Anda telah berhasil keluar')
   return redirect('login')
+
+def populate_category(user):
+  pemasukan = JenisTransaksi.objects.filter(jenis=1)[0]
+  pengeluaran = JenisTransaksi.objects.filter(jenis=2)[0]
+
+  Kategori.objects.create(user=user, nama='Biaya Pemasaran', jenis_kategori=pengeluaran)
+  Kategori.objects.create(user=user, nama='Gaji Karyawan', jenis_kategori=pengeluaran)
+  Kategori.objects.create(user=user, nama='Peralatan Bisnis', jenis_kategori=pengeluaran)
+  Kategori.objects.create(user=user, nama='Penjualan', jenis_kategori=pemasukan)
+  Kategori.objects.create(user=user, nama='Investor', jenis_kategori=pemasukan)
+  Kategori.objects.create(user=user, nama='Pinjaman Bank', jenis_kategori=pemasukan)
