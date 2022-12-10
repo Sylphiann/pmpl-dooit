@@ -33,6 +33,8 @@ DEBUG = True
 
 # APP_NAME = os.getenv('APP_NAME', '')
 
+CSRF_TRUSTED_ORIGINS = ['https://dooit.up.railway.app']
+
 ALLOWED_HOSTS = ['*']
 
 # if not PRODUCTION:
