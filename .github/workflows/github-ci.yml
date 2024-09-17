@@ -73,12 +73,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install SonarQube Scanner
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
-          unzip sonar-scanner-cli-4.7.0.2747-linux.zip
-          export PATH="$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin"
+      - name: Set up SonarQube scanner
+        run: docker pull sonarsource/sonar-scanner-cli:latest
 
-      - name: Run SonarQube
+      - name: Run SonarQube scan
         run: |
-          ./sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner -X -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_LOGIN }} -Dsonar.exclusions=**/migrations/*.py -Dsonar.test.inclusions=**/tests.py -Dsonar.coverage.exclusions=Dsonar.coverage.exclusions=manage.py,dooit/*,**/migrations/*.py
+          docker run --rm -v $(pwd):/usr/src sonarsource/sonar-scanner-cli:latest -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_LOGIN }}
