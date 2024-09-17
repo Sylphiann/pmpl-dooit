@@ -81,4 +81,4 @@ jobs:
 
       - name: Run SonarQube
         run: |
-          ./sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_LOGIN }}
+          ./sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner -X -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_LOGIN }} -Dsonar.exclusions=**/migrations/*.py -Dsonar.test.inclusions=**/tests.py -Dsonar.python.coverage.reportPaths=./coverage.xml -Dsonar.coverage.exclusions=manage.py,dooit/*,**/migrations/*.py -Dsonar.qualitygate.wait=true
