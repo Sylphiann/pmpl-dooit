@@ -37,35 +37,32 @@ jobs:
         python manage.py runserver 8000 &
       continue-on-error: true
 
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v2
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  #     - name: Set up Python Environment
-  #       uses: actions/setup-python@v2
-  #       with:
-  #         python-version: '3.9'
+      - name: Set up Python Environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
 
-  #     - name: Install Dependencies
-  #       run: |
-  #         python -m venv env
-  #         source env/bin/activate
-  #         pip install -r requirements.txt
-  #         pip install coverage
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install coverage
 
-  #     - name: Run Tests
-  #       run: |
-  #         source env/bin/activate
-  #         echo "Starting tests"
-  #         coverage erase
-  #         coverage run --include="./*/*" --omit="./env/*,./project/*,./manage.py" manage.py test .
-  #         coverage xml -i
-  #         coverage report -m
+      - name: Run Tests
+        run: |
+          echo "Starting tests"
+          coverage erase
+          coverage run --include="./*/*" --omit="./env/*,./project/*,./manage.py" manage.py test .
+          coverage xml -i
+          coverage report -m
 
-  #     - name: Upload coverage report
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: coverage-report
-  #         path: coverage.xml
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage.xml
