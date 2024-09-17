@@ -33,7 +33,6 @@ jobs:
 
     - name: Start Django server (background)
       run: |
-        source env/bin/activate
         python manage.py runserver 8000 &
       continue-on-error: true
 
