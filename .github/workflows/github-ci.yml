@@ -66,3 +66,17 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
+
+    sonarqube:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Run SonarQube
+          run: |
+            sonar-scanner \
+              -Dsonar.projectKey= ${{ secrets.SONAR_PROJECTKEY }} \
+              -Dsonar.sources=. \
+              -Dsonar.host.url= ${{ secrets.SONAR_HOST }} \
+              -Dsonar.login= ${{ secrets.SONAR_LOGIN }}
