@@ -1,0 +1,83 @@
+name: dooit-cicd
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python Environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run migrations and collect static files
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py collectstatic --no-input
+
+    - name: Start Django server (background)
+      run: |
+        python manage.py runserver 8000 &
+      continue-on-error: true
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python Environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install coverage
+
+      - name: Run Tests
+        run: |
+          echo "Starting tests"
+          coverage erase
+          coverage run --include="./*/*" --omit="./env/*,./project/*,./manage.py" manage.py test .
+          coverage xml -i
+          coverage report -m
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+  # sonarqube:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: Install SonarQube Scanner
+  #       run: |
+  #         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-linux.zip
+  #         unzip sonar-scanner-cli-4.7.0.2747-linux.zip
+  #         export PATH="$PATH:$(pwd)/sonar-scanner-4.7.0.2747-linux/bin"
+
+  #     - name: Run SonarQube
+  #       run: |
+  #         ./sonar-scanner-4.7.0.2747-linux/bin/sonar-scanner -X -Dsonar.projectKey=${{ secrets.SONAR_PROJECTKEY }} -Dsonar.sources=. -Dsonar.host.url=${{ secrets.SONAR_HOST }} -Dsonar.login=${{ secrets.SONAR_LOGIN }} -Dsonar.exclusions=**/migrations/*.py -Dsonar.test.inclusions=**/tests.py -Dsonar.coverage.exclusions=Dsonar.coverage.exclusions=manage.py,dooit/*,**/migrations/*.py

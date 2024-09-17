@@ -33,7 +33,7 @@ DEBUG = True
 
 # APP_NAME = os.getenv('APP_NAME', '')
 
-CSRF_TRUSTED_ORIGINS = ['https://dooit.up.railway.app']
+# CSRF_TRUSTED_ORIGINS = ['https://dooit.up.railway.app']
 
 ALLOWED_HOSTS = ['*']
 
@@ -101,13 +101,14 @@ WSGI_APPLICATION = 'dooit.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'Nvrr1sIYtGCYqG5vPmMV',
-        'HOST': 'containers-us-west-132.railway.app',
-        'PORT': '7549',
+        'NAME': 'postgres',
+        'USER': 'postgres.lhwezfqfosnnqqvfozln',
+        'PASSWORD': 'F9Hm9exxn246*ad',
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+        'PORT': '6543',
     }
 }
+
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
