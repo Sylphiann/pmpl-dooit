@@ -36,7 +36,7 @@ DEBUG = True
 # CSRF_TRUSTED_ORIGINS = ['https://dooit.up.railway.app']
 
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
 
