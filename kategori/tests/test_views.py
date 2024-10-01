@@ -9,7 +9,12 @@ class KategoriViewsTest(TestCase):
 
     def setUp(self):
         # Create a user and log them in
-        self.user = get_user_model().objects.create_user(username="testuser", password="password123")
+        self.user = get_user_model().objects.create_user(
+            username="testuser",
+            password="password123",
+            company_name="Test Company",   
+            email="testuser@example.com" 
+        )
         self.client.login(username='testuser', password='password123')
 
         # Create sample JenisTransaksi

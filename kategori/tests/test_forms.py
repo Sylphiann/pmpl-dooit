@@ -5,7 +5,7 @@ from catatanTransaksi.models import JenisTransaksi
 class KategoriFormTest(TestCase):
     
     def setUp(self):
-        self.jenis_transaksi = JenisTransaksi.objects.create(nama="Jenis A")
+        self.jenis_transaksi = JenisTransaksi.objects.create(name="Jenis A") 
 
     def test_valid_form(self):
         # Test form with valid data

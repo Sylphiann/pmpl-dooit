@@ -9,7 +9,7 @@ class KategoriModelTest(TestCase):
     def setUp(self):
         # Create a user and a related JenisTransaksi object
         self.user = CustomUser.objects.create(username="testuser", password="password123")
-        self.jenis_transaksi = JenisTransaksi.objects.create(nama="Jenis A")
+        self.jenis_transaksi = JenisTransaksi.objects.create(name="Jenis A") 
 
         # Create a Kategori object for testing
         self.kategori = Kategori.objects.create(
