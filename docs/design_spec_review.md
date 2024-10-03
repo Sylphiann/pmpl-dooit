@@ -82,7 +82,7 @@ Semua data yang terkait dengan keuangan dan pengguna disimpan dalam basis data d
 
 #### Error Code Message
 
-Setiap error yang terjadi dalam aplikasi dikategorikan dan ditampilkan dengan pesan yang jelas agar pengguna dapat mengetahui jenis kesalahan yang terjadi. Kode error yang sesuai juga ditampilkan untuk memudahkan penyelesaian masalah baik oleh pengguna ataupun pengembang.
+Setiap error yang terjadi dalam aplikasi dikategorikan dan ditampilkan dengan pesan yang jelas agar pengguna dapat mengetahui jenis kesalahan yang terjadi. Kode error yang sesuai juga ditampilkan untuk memudahkan penyelesaian masalah baik oleh pengguna ataupun pengembang aplikasi.
 
 #### Logging Mechanisms
 
@@ -115,5 +115,8 @@ Proses monitoring dan logging dilakukan melalui Railway untuk memantau status se
 ---
 
 ## Review and Feedback
+
+- Beberapa pengguna memberikan umpan balik awal yang menunjukkan bahwa proses konsultasi dapat lebih disederhanakan agar lebih user-friendly. 
+- Beberapa kasus pengujian juga menyoroti pentingnya validasi yang lebih baik dalam proses input data. 
 
 ---
