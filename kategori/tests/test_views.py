@@ -8,18 +8,18 @@ from kategori.forms import KategoriForm
 class KategoriViewsTest(TestCase):
 
     def setUp(self):
-        # Create a user and log them in
+        # Create a user and ensure login is successful
         self.user = get_user_model().objects.create_user(
             username="testuser",
             password="password123",
-            company_name="Test Company",   
-            email="testuser@example.com" 
+            company_name="Test Company",
+            email="testuser@example.com"
         )
         self.client.login(username='testuser', password='password123')
 
         # Create sample JenisTransaksi
-        self.jenis_pemasukan = JenisTransaksi.objects.create(id=1, nama="Pemasukan")
-        self.jenis_pengeluaran = JenisTransaksi.objects.create(id=2, nama="Pengeluaran")
+        self.jenis_pemasukan = JenisTransaksi.objects.create(jenis=JenisTransaksi.PEMASUKAN)
+        self.jenis_pengeluaran = JenisTransaksi.objects.create(jenis=JenisTransaksi.PENGELUARAN)
 
         # Create sample Kategori for the user
         Kategori.objects.create(user=self.user, nama="Kategori Pemasukan", jenis_kategori=self.jenis_pemasukan)
@@ -31,6 +31,11 @@ class KategoriViewsTest(TestCase):
 
     def test_index_view_context(self):
         response = self.client.get(reverse('kategori:index'))
+        
+        # Ensure the context contains the correct data
+        self.assertIsNotNone(response.context)  # Check context exists
+        self.assertIn('kategoris_pemasukan', response.context)  # Check 'kategoris_pemasukan' in context
+        self.assertIn('kategoris_pengeluaran', response.context)  # Check 'kategoris_pengeluaran' in context
         self.assertEqual(len(response.context['kategoris_pemasukan']), 1)
         self.assertEqual(len(response.context['kategoris_pengeluaran']), 1)
         self.assertEqual(response.context['kategoris_pemasukan'][0].nama, "Kategori Pemasukan")
@@ -47,23 +52,23 @@ class KategoriViewsTest(TestCase):
             'jenis_kategori': self.jenis_pemasukan.id
         }
         response = self.client.post(reverse('kategori:buat_kategori'), data=form_data)
-        self.assertEqual(response.status_code, 302) 
+        self.assertEqual(response.status_code, 302)  # Should redirect after successful post
         self.assertTrue(Kategori.objects.filter(nama="Kategori Baru").exists())
 
     def test_buat_kategori_view_post_invalid(self):
         form_data = {
-            'nama': '',
+            'nama': '', 
             'jenis_kategori': self.jenis_pemasukan.id
         }
         response = self.client.post(reverse('kategori:buat_kategori'), data=form_data)
-        self.assertEqual(response.status_code, 200) 
-        self.assertFalse(Kategori.objects.filter(nama="").exists())  
+        self.assertEqual(response.status_code, 200)  # Should not redirect due to form errors
+        self.assertFalse(Kategori.objects.filter(nama="").exists())  # Ensure no invalid entries saved
 
     def test_buat_kategori_view_duplicate(self):
         form_data = {
-            'nama': 'Kategori Pemasukan', 
+            'nama': 'Kategori Pemasukan',
             'jenis_kategori': self.jenis_pemasukan.id
         }
         response = self.client.post(reverse('kategori:buat_kategori'), data=form_data)
-        self.assertEqual(response.status_code, 200)  
-        self.assertContains(response, 'Kategori ini sudah pernah dibuat!')  
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Kategori ini sudah pernah dibuat!')
