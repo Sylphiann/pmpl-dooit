@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-9mca@gc30#6e(8$$8ak@&)tos_qmb9he6i=zneq7=+q#8!ek!5
 # Automatically determine environment by detecting if DATABASE_URL variable.
 # DATABASE_URL is provided by Heroku if a database add-on is added
 # (e.g. Heroku Postgres).
-PRODUCTION = os.getenv("DATABASE_URL") is not None
+
+PRODUCTION = os.getenv('DATABASE_URL') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,7 +37,7 @@ DEBUG = True
 # CSRF_TRUSTED_ORIGINS = ['https://dooit.up.railway.app']
 
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 # Application definition
 
@@ -94,6 +95,7 @@ WSGI_APPLICATION = "dooit.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+
 
 DATABASES = {
     "default": {
