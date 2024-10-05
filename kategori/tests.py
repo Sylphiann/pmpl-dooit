@@ -8,7 +8,6 @@ from kategori.forms import KategoriForm
 from kategori.views import index, buat_kategori
 from catatanTransaksi.models import JenisTransaksi
 
-
 # Form Tests
 class KategoriFormTest(TestCase):
 
@@ -76,4 +75,39 @@ class KategoriUrlsTest(TestCase):
     def test_buat_kategori_url_resolves(self):
         url = reverse('kategori:buat_kategori')
         self.assertEqual(resolve(url).func, buat_kategori)
+        
+# View Tests
+class KategoriViewsTest(TestCase):
+
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username="testuser",
+            password="password123",
+            company_name="Test Company",  
+            email="testuser@example.com"
+        )
+        self.jenis_pemasukan = JenisTransaksi.objects.create(jenis=JenisTransaksi.PEMASUKAN)
+        self.kategori = Kategori.objects.create(user=self.user, nama="Test Kategori", jenis_kategori=self.jenis_pemasukan)
+
+    def test_create_kategori(self):
+        kategori_count = Kategori.objects.count()
+        new_kategori = Kategori.objects.create(user=self.user, nama="New Kategori", jenis_kategori=self.jenis_pemasukan)
+        self.assertEqual(Kategori.objects.count(), kategori_count + 1)
+        self.assertEqual(new_kategori.nama, "New Kategori")
+
+    def test_read_kategori(self):
+        kategori = Kategori.objects.get(nama="Test Kategori")
+        self.assertEqual(kategori.nama, "Test Kategori")
+
+    def test_update_kategori(self):
+        kategori = Kategori.objects.get(nama="Test Kategori")
+        kategori.nama = "Updated Kategori"
+        kategori.save()
+        self.assertEqual(kategori.nama, "Updated Kategori")
+
+    def test_delete_kategori(self):
+        kategori_count = Kategori.objects.count()
+        kategori = Kategori.objects.get(nama="Test Kategori")
+        kategori.delete()
+        self.assertEqual(Kategori.objects.count(), kategori_count - 1)
         
