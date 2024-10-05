@@ -96,6 +96,14 @@ Mekanisme logging diterapkan untuk mencatat setiap error dan aktivitas penting d
 
 Pada bagian pengujian unit, digunakan framework Django TestCase karena  mendukung pengujian fitur dasar seperti pencatatan transaksi, pengelolaan kategori, dan konsultasi keuangan. Pengujian ini bertujuan untuk memastikan bahwa setiap fungsi berjalan sesuai dengan harapan.
 
+#### Usability Testing
+
+Selain melakukan unit test, usability testing juga dilakukan untuk memastikan bahwa pengguna dapat dengan mudah memahami dan menggunakan antarmuka (UI) aplikasi. Pengujian ini dilakukan dengan berfokus pada kemudahan navigasi, aksesibilitas fitur, dan kepuasan pengguna dalam menggunakan aplikasi Dooit.
+
+#### Performance Testing
+
+Performance testing juga direncanakan untuk dilakukan supaya bisa dipastikan bahwa aplikasi dapat menangani beban kerja dengan baik, terutama ketika banyak transaksi dilakukan sekaligus. Hal ini dilakukan dengan maksud untuk menjaga performa dan skalabilitas dari aplikasi Dooit saat digunakan oleh banyak pengguna secara bersamaan.
+
 #### Acceptance criteria
 
 Kriteria penerimaan ditentukan berdasarkan fungsionalitas utama dari Dooit, yaitu fitur pencatatan transaksi, manajemen anggaran, dan fitur konsultasi yang berjalan sesuai dengan kebutuhan bisnis pengguna.
