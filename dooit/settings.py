@@ -108,6 +108,9 @@ if PRODUCTION:
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "postgres",
         "USER": "postgres.lhwezfqfosnnqqvfozln",
+        'TEST': {
+            'NAME': 'mytestdatabase',
+        },
         "PASSWORD": "F9Hm9exxn246*ad",
         "HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
         "PORT": "6543",
