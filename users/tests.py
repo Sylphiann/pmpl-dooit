@@ -1,7 +1,6 @@
 from unittest import mock
 from django.test import TestCase, RequestFactory, Client
 from django.urls import reverse
-from django.contrib import auth
 from unittest import mock
 from .views import login
 from .models import CustomUser
@@ -10,7 +9,6 @@ from .models import CustomUser
 mock_message = mock.MagicMock()
 mock_login = mock.MagicMock()
 mock_authenticate = mock.MagicMock()
-mock_render = mock.MagicMock()
 
 # Create your tests here.
 class AuthViewsTest(TestCase):
@@ -35,7 +33,6 @@ class AuthViewsTest(TestCase):
         mock_message.reset_mock()
         mock_login.reset_mock()
         mock_authenticate.reset_mock()
-        mock_render.reset_mock()
     
     def test_login_page_renders_correct_template(self):
         # Make a GET request to the login view
@@ -95,9 +92,18 @@ class AuthViewsTest(TestCase):
         self.assertEqual(response.status_code, 302) # Redirects
         self.assertEqual(response['Location'], '/login/')
 
+    @mock.patch('django.contrib.auth.logout', mock_login)
+    @mock.patch('django.contrib.messages.info', mock_message)
     def test_logout_success(self):
-        pass
+        mock_login.side_effect = [None]
+        mock_message.side_effect = [""]
 
+        response = self.client.post(reverse('logout'))
+
+        # Check the response
+        self.assertEqual(response.status_code, 302) # Redirects
+        self.assertEqual(response['Location'], '/login/')
+        
     def test_register_already_authenticated(self):
         pass
 
