@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-9mca@gc30#6e(8$$8ak@&)tos_qmb9he6i=zneq7=+q#8!ek!5
 # Automatically determine environment by detecting if DATABASE_URL variable.
 # DATABASE_URL is provided by Heroku if a database add-on is added
 # (e.g. Heroku Postgres).
-# PRODUCTION = os.getenv('DATABASE_URL') is not None
+
+PRODUCTION = os.getenv('DATABASE_URL') is not None
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -95,8 +96,16 @@ WSGI_APPLICATION = "dooit.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+
 DATABASES = {
     "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
+
+if PRODUCTION:
+    DATABASES["default"] = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "postgres",
         "USER": "postgres.lhwezfqfosnnqqvfozln",
@@ -104,7 +113,6 @@ DATABASES = {
         "HOST": "aws-0-ap-southeast-1.pooler.supabase.com",
         "PORT": "6543",
     }
-}
 
 
 AUTH_USER_MODEL = "users.CustomUser"
