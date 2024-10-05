@@ -54,6 +54,10 @@ jobs:
           pip install -r requirements.txt
           pip install coverage
 
+      - name: Collect static files
+        run: |
+          python manage.py collectstatic --no-input
+          
       - name: Run Tests
         run: |
           echo "Starting tests"
