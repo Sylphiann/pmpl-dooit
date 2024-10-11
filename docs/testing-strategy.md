@@ -1,4 +1,4 @@
-# Testing Strategy Outline
+# Testing Strategy
 
 ## Table of Contents
 
@@ -43,3 +43,5 @@
 8. [Maintenance of Test Strategy](#maintenance-of-test-strategy)
    - Review and Update Cycle
    - Continuous Improvement
+
+[Link UAT](https://docs.google.com/spreadsheets/d/1YQqmOEBzx_XG3KdagBaLgjcqNArMwhS743xjrZ9dvd0/edit?gid=996467625#gid=996467625)
