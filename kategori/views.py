@@ -20,7 +20,7 @@ def index(request):
 @user_passes_test(check_role_pencatat)
 def buat_kategori(request):
     context = {}
-  
+    
     form = KategoriForm(request.POST or None)
 
     try:

@@ -20,7 +20,7 @@ class Kategori(models.Model):
     def get_list_catatan_transaksi(self, user):
         return Kategori.objects.get(nama=self.nama, user=user).catatantransaksi_set.all()
 
-    def get_kategori_nomimal(self, start_date, end_date, user):
+    def get_kategori_nominal(self, start_date, end_date, user):
         catatan_transaksi = self.get_list_catatan_transaksi(user)
         nominal = 0
 

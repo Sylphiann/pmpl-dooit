@@ -15,7 +15,7 @@ class Anggaran(models.Model):
         return self.kategori.get_nama()
 
     def get_pengeluaran(self):
-        return self.kategori.get_kategori_nomimal(self.tanggal_mulai, self.tanggal_selesai, self.user)
+        return self.kategori.get_kategori_nominal(self.tanggal_mulai, self.tanggal_selesai, self.user)
 
     def get_sisa(self):
         return self.nominal - self.get_pengeluaran()
